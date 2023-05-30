@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "figura_custom_api",
-  "version": "${version}",
+  "version": "1.0.2",
 
   "name": "Figura Custom API",
   "description": "Custom API template for Figura :3",
@@ -19,18 +19,15 @@
   "environment": "client",
   "entrypoints": {
     "figura_api": [
-      "org.moon.figura_custom_api.TestAPI"
-    ],
-    "figura_trust": [
-      "org.moon.figura_custom_api.TestTrust"
+      "org.ame.figura_custom_api.TestAPI"
     ]
   },
 
   "depends": {
-    "java": ">=${java_version}",
-    "minecraft": "${minecraft_version}",
-    "fabricloader": ">=${loader_version}",
-    "fabric": ">=${fabric_api}",
-    "figura": ">=${figura}"
+    "java": ">=17",
+    "minecraft": "1.19.4",
+    "fabricloader": ">=0.14.21",
+    "fabric": ">=0.83.0+1.19.4",
+    "figura": ">=0.1.0-rc.14"
   }
 }

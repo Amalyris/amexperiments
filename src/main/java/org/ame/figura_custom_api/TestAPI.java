@@ -1,4 +1,4 @@
-package org.moon.figura_custom_api;
+package org.ame.figura_custom_api;
 
 import org.luaj.vm2.LuaError;
 import org.moon.figura.avatar.Avatar;
@@ -6,11 +6,16 @@ import org.moon.figura.lua.FiguraAPI;
 import org.moon.figura.lua.LuaNotNil;
 import org.moon.figura.lua.LuaWhitelist;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.URI;
 import java.util.*;
 
 @LuaWhitelist
 public class TestAPI implements FiguraAPI {
-
+    static HttpClient client = HttpClient.newHttpClient();
     /**
      * test field
      */
@@ -67,8 +72,20 @@ public class TestAPI implements FiguraAPI {
      * test method 2 - with required arguments
      */
     @LuaWhitelist
-    public String test2(@LuaNotNil Object arg1, Object arg2) {
-        return arg1.toString() + arg2;
+    public static String test2(@LuaNotNil String arg1) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(arg1))
+                .GET()
+                .build();
+
+        HttpResponse<Void> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.discarding());
+        } catch (IOException | InterruptedException e) {
+            throw new LuaError(e);
+        }
+        int status = response.statusCode();
+        return String.valueOf(status);
     }
 
     /**
